@@ -65,10 +65,10 @@ const Register = () => {
                     Email: <input type="text" onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 <div className="text-light">
-                    Password: <input type="text" onChange={(e) => setPassword(e.target.value)} />
+                    Password: <input type="password" onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 <div className="text-light">
-                    Confirm Password: <input type="text" onChange={(e) => setConfirmPassword(e.target.value)} />
+                    Confirm Password: <input type="password" onChange={(e) => setConfirmPassword(e.target.value)} />
                 </div>
                 <div className="errors">
                     {err.firstName && <h5 style={{color: "yellow" }}>{err.firstName.message}</h5> }

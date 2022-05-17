@@ -4,9 +4,10 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const socket = require("socket.io");
 
 app.use(cookieParser());
-// credentials: true sets up express to get cookie in request header. origin sets the client URL for server to accerpt requests
+// credentials: true sets up express to get cookie in request header. origin sets the client URL for server to accept requests
 app.use(cors({ credentials: true, origin: process.env.CLIENT_URL }));
 
 app.use(express.json());
@@ -18,11 +19,33 @@ require("../server/routes/post.routes")(app);
 require("../server/routes/comment.routes")(app);
 require("../server/routes/product.routes")(app);
 
-// const jwt = require("jsonwebtoken");
-// var token = jwt.sign({ foo: "bar" }, process.env.SECRET_KEY);
-// console.log("token :", token);
-// const decodeToken = jwt.verify(token, process.env.SECRET_KEY)
-// console.log(decodeToken)
+const server = app.listen( process.env.PORT, () => console.log(`Listening on port: ${process.env.PORT}`) );
 
-app.listen( process.env.PORT, () => 
-console.log(`Listening on port: ${process.env.PORT}`) );
+//============= Socket.io
+
+const io = socket(server, {
+    cors: {
+        origin: 'http://localhost:3000',
+        methods: [ 'GET', 'POST' ],
+        allowedHeaders: [ '*' ],
+        credential: true,
+    }
+});
+
+//start listening on clients wanting to connect
+io.on("connection", (socket) => {
+    console.log(`Server side of socket id: ${socket.id}`)
+
+    // .on() is for listening to conversation / events from clients
+    socket.on("added_product", (data) => {
+        console.log(data)
+        // emits an event to all clients other than this particular one that sent the original message
+        socket.broadcast.emit("product_added", data);
+
+    })
+
+    socket.on("deleted_product", (data) => {
+        console.log("Product removed - product ID: " + data);
+        socket.broadcast.emit("product_deleted", data);
+    })
+});

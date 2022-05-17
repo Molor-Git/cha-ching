@@ -36,7 +36,7 @@ const Login = () => {
                 Email: <input type="text" onChange={(e) => setEmail(e.target.value)} />
             </div>
             <div className="password text-light">
-                Password: <input type="text" onChange={(e) => setPassword(e.target.value)} />
+                Password: <input type="password" onChange={(e) => setPassword(e.target.value)} />
             </div>
             <button className="btn btn-primary">
                 <Link 
