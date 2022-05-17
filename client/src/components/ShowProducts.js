@@ -1,19 +1,58 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import io from 'socket.io-client';
 
 const ShowProducts = (props) => {
     const {removeFromDom, products, setProducts} = props;
     const [authError, setAuthError] = useState("");
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
+
+    const [socket] = useState( () => io(":8000") );
+
+    useEffect(() => {
+        console.log("Inside of useEffect for socket");
+
+        //We listen using the .on() function - this is for BOTH client and server
+        socket.on("connect", () => {
+            console.log("We're connected with the server on: " + socket.id);
+        });
+        // Listening for a new product added!!!
+        socket.on("product_added", (data) => {
+            console.log(data);
+            console.log(products);
+
+            setProducts((currentProductValue) => {
+                console.log("Inside setProducts: " + currentProductValue);
+                
+                return [ data, ...currentProductValue ];
+            });
+        });
+
+        socket.on("product_deleted", (data) => {
+            setProducts((currentListOfProducts) => {
+                let filteredProducts = currentListOfProducts.filter((oneProduct) => {
+                    return oneProduct._id !== data;
+                })
+                
+                return filteredProducts;
+            })
+        });
+
+        // need to clean up our connection when this component is unloaded
+        // return ONLY runs when this components is closed/unloaded
+        return () => socket.disconnect();
+
+    }, []);
+    
     // DELETE 
     const deleteProduct = (productId) => {
         axios.delete(`http://localhost:8000/api/products/${productId}`)
             .then((res) => {
                 console.log(res.data)
                 removeFromDom(productId)
-                // socket.emit("adopted_pet", petId)
+                // socket.emit("deleted_product", productId)
             })
             .catch((err) => {
                 console.log(err);
