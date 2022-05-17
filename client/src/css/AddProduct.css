@@ -1,0 +1,17 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.add {
+    height: fit-content;
+    width: fit-content;
+    margin: auto;
+    border-radius: 10px;
+}
+
+.Ptag {
+    margin-left: 450px;
+}
+

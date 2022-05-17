@@ -1,0 +1,28 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.login {
+    height: auto;
+    width: fit-content;
+    margin: auto;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+div {
+    text-align: right;
+}
+
+.email, .password{
+    margin: 20px;
+}
+
+input {
+    border: none;
+    padding: 3px;
+    margin: 2px;
+    border-radius: 6px;
+}
