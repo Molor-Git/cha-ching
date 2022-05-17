@@ -24,7 +24,7 @@ const ProductDetail = (props) => {
             <h4><span className="text-info">Price:</span> {`$${product.price}`}</h4>
             <button className='btn btn-primary' >
                 <Link to={"/"} className="text-light">
-                    Main
+                    Go back
                 </Link>
             </button>
         </div>

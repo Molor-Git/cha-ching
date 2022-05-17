@@ -15,7 +15,7 @@ const AddProduct = (props) => {
     const [authError, setAuthError] = useState("");
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
-    
+
     const onSubmitHandler = (e) => {
         e.preventDefault();
         const newProduct = {
@@ -26,13 +26,13 @@ const AddProduct = (props) => {
         axios.post('http://localhost:8000/api/products', newProduct, {
             withCredentials: true,
         })
-            .then((response) => {
-                console.log(response.data);
+            .then((newProduct) => {
+                console.log(newProduct);
                 navigate("/");
                 setProducts([...products]); 
                 
                 // Tell the server that we successfully added a new product!
-                socket.emit("added_product", response.data.createdProduct)
+                socket.emit("added_product", newProduct.product_id)
                 // Make sure you clean up after yourself - do NOT leave a socket connected!
                 socket.disconnect();
             })

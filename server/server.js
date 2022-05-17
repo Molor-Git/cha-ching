@@ -38,7 +38,7 @@ io.on("connection", (socket) => {
 
     // .on() is for listening to conversation / events from clients
     socket.on("added_product", (data) => {
-        console.log(data)
+        console.log("Product added - product ID: " + data)
         // emits an event to all clients other than this particular one that sent the original message
         socket.broadcast.emit("product_added", data);
 

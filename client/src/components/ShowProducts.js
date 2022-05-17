@@ -52,7 +52,7 @@ const ShowProducts = (props) => {
             .then((res) => {
                 console.log(res.data)
                 removeFromDom(productId)
-                // socket.emit("deleted_product", productId)
+                socket.emit("deleted_product", productId)
             })
             .catch((err) => {
                 console.log(err);
