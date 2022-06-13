@@ -47,7 +47,7 @@ const Register = () => {
                 <h1><span className="text-info">Welcome to</span> Cha-Ching 🤑</h1>
                 <h5><Link to={`/login`} className="login text-info">Login</Link></h5>
             </div>
-                <h4 className="text-light">One man's trash, Another men's treasure! </h4>
+                {/* <h4 className="text-light">One man's trash, Another men's treasure! </h4> */}
             <div className="successMsg">
                 <h5 style={{ color: "lightgreen" }}>{successMsg}</h5>
             </div>
